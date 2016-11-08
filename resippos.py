@@ -8,8 +8,6 @@ Resippos.py: Really Simple Python Port Scanner
 import sys
 import socket
 import subprocess
-from datetime import datetime
-
 
 # Functions
 def define_host():
@@ -26,7 +24,7 @@ def define_ports():
     ''' Ask ports to be scanned'''
     ports = input('Which ports do we scan? ')
     if ports.lower() == 'a':                                            # All ports (1 - 1024)
-        ports = range(1, 1025)
+        ports = range(1, 65535)
     elif ports.isdigit():                                               # Single port
         ports = [ports]
     elif '-' in ports:                                                  # Range of ports
@@ -41,7 +39,7 @@ def define_ports():
 
 # Main function
 def main():
-    '''Main function description'''
+    '''Scan the ports'''
     subprocess.call('clear', shell=True)                                # Clear the screen
 
     host = define_host()
@@ -52,8 +50,11 @@ def main():
         if s.connect_ex((host, int(port))) == 0:
             print('Port', port, ' is open')
             s.close()
-    #print(host)
-    #print(ports)
+
 
 if __name__ == '__main__':
     sys.exit(main())
+
+## TODO:
+##  - Add opinion to choose a random / constant time intervals between port scans
+##  - Add sys.argv options
